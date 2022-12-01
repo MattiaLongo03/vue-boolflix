@@ -1,18 +1,61 @@
 <template>
   <div>
-    <HeaderPage />
-    <MainPage />
+    <HeaderPage @searchedValue="filmName" />
+    <MainPage
+      :arr-movies="arrMovies"
+      :arr-tv="arrTv"
+    />
   </div>
 </template>
 
 <script>
 import HeaderPage from '@/components/HeaderPage.vue';
+import MainPage from '@/components/MainPage.vue';
+import axios from 'axios';
 
 export default {
   name: 'App',
   components: {
     HeaderPage,
+    MainPage,
   },
+
+  data() {
+    return {
+      baseApiUrl: 'https://api.themoviedb.org/3',
+      apikey: '3e31986dee38cb6841668a9b421f4f5f',
+      resultsLanguage: 'it-IT',
+      arrMovies: [],
+      arrSerie: [],
+    };
+  },
+
+  methods: {
+    filmName(value) {
+      axios.get(`${this.baseApiUrl}/search/movie`, {
+        params: {
+          api_key: this.apikey,
+          query: value,
+          language: this.resultsLanguage,
+        },
+      })
+        .then((responseAxios) => {
+          this.arrMovies = responseAxios.data.results.slice(0, 8);
+        });
+
+      axios.get(`${this.baseApiUrl}/search/tv`, {
+        params: {
+          api_key: this.apikey,
+          query: value,
+          language: this.resultsLanguage,
+        },
+      })
+        .then((responseAxios) => {
+          this.arrSerie = responseAxios.data.results.slice(0, 8);
+        });
+    },
+  },
+
 };
 </script>
 
