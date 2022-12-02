@@ -30,7 +30,7 @@ export default {
 
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
     .navbar{
     display: flex;
     justify-content: space-around;

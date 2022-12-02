@@ -2,8 +2,8 @@
   <div>
     <HeaderPage @searchedValue="filmName" />
     <MainPage
-      :arr-movies="arrMovies"
-      :arr-tv="arrTv"
+      :arr-film="arrFilm"
+      :arr-serie="arrSerie"
     />
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
       baseApiUrl: 'https://api.themoviedb.org/3',
       apikey: '3e31986dee38cb6841668a9b421f4f5f',
       resultsLanguage: 'it-IT',
-      arrMovies: [],
+      arrFilm: [],
       arrSerie: [],
     };
   },
@@ -40,7 +40,7 @@ export default {
         },
       })
         .then((responseAxios) => {
-          this.arrMovies = responseAxios.data.results.slice(0, 8);
+          this.arrFilm = responseAxios.data.results.slice(0, 8);
         });
 
       axios.get(`${this.baseApiUrl}/search/tv`, {
